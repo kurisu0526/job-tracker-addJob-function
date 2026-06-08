@@ -63,18 +63,12 @@ export async function addJob(event) {
         );
 
         return {
-            statusCode: 201,
-            body: JSON.stringify({
-                message: 'Job added successfully',
-                jobId
-            })
+            success: true,
+            message: 'Job added successfully',
+            jobId: jobId
         };
+        
     } catch (error) {
-        return {
-            statusCode: 401,
-            body: JSON.stringify({
-                message: err.message || 'Failed to add job'
-            })
-        };
+        throw new Error(error.message || 'Failed to add job');
     }
 }
