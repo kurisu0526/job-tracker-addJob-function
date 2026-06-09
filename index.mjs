@@ -12,7 +12,8 @@ export const handler = async (event) => {
         return {
             statusCode: 401,
             body: JSON.stringify({
-                message: err.message,
+                message: "There was an error adding the job. Try again later.",
+                details: err.message
             })
         };
     }

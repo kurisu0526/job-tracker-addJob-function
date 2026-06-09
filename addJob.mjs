@@ -29,7 +29,7 @@ export async function addJob(event) {
     try {
         const decoded = authenticate(event);
         const userId = decoded.userId;
-        
+
         const body = JSON.parse(event.body || '{}');
         if (!body.position || !body.company) {
             throw new Error('Position and Company Name are required');
@@ -67,7 +67,7 @@ export async function addJob(event) {
         };
 
         // 4. Save to DynamoDB
-        await db.send(
+        await docClient.send(
             new PutCommand({
                 TableName: TABLE,
                 Item: jobItem
@@ -81,6 +81,7 @@ export async function addJob(event) {
         };
         
     } catch (error) {
-        throw new Error(error.message || 'Failed to add job');
+        console.error(error.message);
+        throw new Error(error.message);
     }
 }
