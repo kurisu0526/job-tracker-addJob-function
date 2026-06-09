@@ -69,7 +69,7 @@ export async function addJob(event) {
         // 4. Save to DynamoDB
         await docClient.send(
             new PutCommand({
-                TableName: TABLE,
+                TableName: TABLE_NAME,
                 Item: jobItem
             })
         );
