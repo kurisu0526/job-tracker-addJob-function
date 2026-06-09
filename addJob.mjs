@@ -10,7 +10,7 @@ const docClient = DynamoDBDocumentClient.from(client);
 const TABLE_NAME = 'job-tracker';
 const JOBDETAILS_INDEX = 'jobDetailsGSI';
 const JOBDETAILS_GSIKEY = 'jobdetails_gsi_pk';
-const JOBDETAILS_GSIKEY_SK = 'jobdetails_gsi_sk ';
+const JOBDETAILS_GSIKEY_SK = 'jobdetails_gsi_sk';
 const USER_PREFIX = 'USER#';
 const JOB_PREFIX = 'JOB#';
 const STATUS_PREFIX = 'STATUS#';
@@ -42,17 +42,17 @@ export async function addJob(event) {
             pk: `${USER_PREFIX}${userId}`,
             sk: jobSK,
 
-            Type: 'JOB_APPLICATION',
+            type: 'JOB_APPLICATION',
 
             jobdetails_gsi_pk: `${USER_PREFIX}${userId}${STATUS_PREFIX}${status}`,
             jobdetails_gsi_sk: now,
 
             // 🔥 Query-friendly fields (important for GSIs later)
-            Status: status,
-            Company: body.company,
 
             // 🧠 Flexible structured data
-            JobDetails: {
+            jobDetails: {
+                status: status,
+                company: body.company,
                 position: body.position,
                 location: body.location || null,
                 appliedDate: body.appliedDate || now,
@@ -62,8 +62,8 @@ export async function addJob(event) {
                 url: body.url || null
             },
 
-            CreatedAt: now,
-            UpdatedAt: now
+            createdAt: now,
+            updatedAt: now
         };
 
         // 4. Save to DynamoDB

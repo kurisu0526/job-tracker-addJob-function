@@ -1,5 +1,5 @@
 {
-  "name": "job-tracker-signup-function",
+  "name": "job-tracker-addJob-function",
   "version": "1.0.0",
   "description": "",
   "main": "index.mjs",
