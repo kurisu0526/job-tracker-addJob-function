@@ -1,4 +1,4 @@
-name: Deploy Static Website to S3
+name: Deploy Lambda Function For Job Tracker Add Job
 
 on:
   push:
@@ -46,9 +46,11 @@ jobs:
         role-session-name: GitHubActions-Backend-${{ github.run_id }}
         aws-region: "ap-southeast-1"
 
-    # Deploy to S3 bucket - directly sync the repository contents
+    # Deploy to AWS Lambda - directly sync the repository contents
     - name: Zip and Deploy to AWS Lambda
       uses: aws-actions/aws-lambda-deploy@v1
       with:
         function-name: job-tracker-addJob-function
         code-artifacts-dir: .
+        runtime: nodejs24.x
+        handler: index.handler
