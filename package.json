@@ -13,6 +13,7 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.1063.0",
     "@aws-sdk/lib-dynamodb": "^3.1063.0",
-    "uuidv4": "^6.2.13"
+    "uuidv4": "^6.2.13",
+    "jsonwebtoken": "^9.0.3"
   }
 }
