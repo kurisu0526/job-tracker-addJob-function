@@ -15,9 +15,21 @@ const USER_PREFIX = 'USER#';
 const JOB_PREFIX = 'JOB#';
 const STATUS_PREFIX = 'STATUS#';
 
+function authenticate(event) {
+    const token = event.headers?.authorization?.replace('Bearer ', '');
+
+    if (!token) {
+        throw new Error('Missing auth token');
+    }
+
+    return jwt.verify(token, process.env.JWT_SECRET);
+}
+
 export async function addJob(event) {
     try {
-
+        const decoded = authenticate(event);
+        const userId = decoded.userId;
+        
         const body = JSON.parse(event.body || '{}');
         if (!body.position || !body.company) {
             throw new Error('Position and Company Name are required');
